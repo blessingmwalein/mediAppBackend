@@ -1,5 +1,7 @@
 'use strict'
  const Appointment = use('App/Models/Appointment')
+ const Moment = use('moment')
+
 class AppointmentController {
 
     async index({response}){
@@ -19,20 +21,22 @@ class AppointmentController {
   async store({request, response}){
      const dbappointments= await Appointment.find("5ee992a77c515db4a1cceabc")
      const appointmentInfo = request.all()
-    const appointment={
+
+     const m= new Moment()
+
+     const appointment={
         patient_id:appointmentInfo.patient_id,
         order_id:0,
-       // title:appointmentInfo.title,
-        // description:appointmentInfo.description,
-        // hospital_id:appointmentInfo.hospital_id,
+        title:appointmentInfo.title,
+        description:appointmentInfo.description,
+        hospital_id:appointmentInfo.hospital_id,
         priority:appointmentInfo.priority,
-       // doctor_id:appointmentInfo.doctor_id,
-        // start_time:"8.00",
-        // end_time:9.00,
-        // duration:1,
-        // status:'pending'
+        doctor_id:appointmentInfo.doctor_id,
+        start_time:m.toString(),
+        end_time:m.add(1, 'h').toString(),
+        duration:1,
+        status:'pending'
     }
-
       const appointments = dbappointments.Appointments
 
     const pq = new PriorityQueue(appointments); 
@@ -68,7 +72,6 @@ class AppointmentController {
                     added = true;
                     break;
                 }
-
             }
             if (!added){
                 appointments.push(appointment);
