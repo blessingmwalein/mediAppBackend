@@ -5,13 +5,17 @@ const Hospital =use('App/Models/Hospital')
 
 class UserController {
 
+    async index({response}){
+        const users =await User.all()
+
+        return response.json(users)
+    }
     async login({request, response, auth}){
         const{email, password} = request.only(['email', ['password']])
 
         const token = await auth.attempt(email, password)
         return response.json(token)
     }
-
     async register({request, response}){
             const userInfo = request.only(['first_name', 'last_name', 'email', 'password', 'hospital_id'])
 
@@ -28,13 +32,12 @@ class UserController {
     }
     async show({params, response,request}){
         const user =await User.find(params.id)
-        const  hospital =await Hospital.find(user.hospital_id)
+        // const  hospital =await Hospital.find(user.hospital_id)
         const data={
             first_name:user.first_name,
             last_name:user.last_name,
             email:user.email,
-            hospital_link:'http://127.0.0.1:3333/hospital/show/'+hospital._id
-          
+           
         }
         return response.json(data)
     }

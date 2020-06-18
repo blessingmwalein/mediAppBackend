@@ -20,6 +20,7 @@ Route.group(()=>{
    Route.post('login', 'UserController.login')
    Route.post('register', 'UserController.register')
    Route.get('show/:id', 'UserController.show')
+   Route.get('/', 'UserController.index')
 }).prefix('medico')
 
 Route.group(()=>{

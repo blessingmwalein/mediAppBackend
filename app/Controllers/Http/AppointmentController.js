@@ -41,12 +41,6 @@ class AppointmentController {
 
     const pq = new PriorityQueue(appointments); 
     
-    //  pq.enqueue({patient_id:1,order_id:1, 'priority':0.7},); 
-    //  pq.enqueue({patient_id:2,order_id:2, 'priority':0.8},); 
-    //  pq.enqueue({patient_id:2,order_id:0, 'priority':0.4},); 
-    //  pq.enqueue({patient_id:2,order_id:0, 'priority':0.9},); 
-
-  
     const appointsToDatabase= pq.enqueue(appointment); 
     dbappointments.Appointments=appointsToDatabase
 
