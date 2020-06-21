@@ -36,18 +36,18 @@ Route.group(() => {
 
  Route.group(()=>{
     Route.post('save', 'DoctorController.store')
-    Route.get('/', 'DoctorController.index')
+    Route.get('/:id', 'DoctorController.index')
     Route.get('show/:id', 'DoctorController.show')
     Route.put('edit/:id', 'DoctorController.update')
-    Route.delete('delete/:id', 'DoctorController.delete')
+    Route.post('delete/:id', 'DoctorController.delete')
  }).prefix('doctors')
 
  Route.group(()=>{
    Route.post('save', 'PatientController.store')
-   Route.get('/', 'PatientController.index')
+   Route.get('/:id', 'PatientController.index')
    Route.get('show/:id', 'PatientController.show')
    Route.put('edit/:id', 'PatientController.update')
-   Route.delete('delete/:id', 'PatientController.delete')
+   Route.post('delete/:id', 'PatientController.delete')
 }).prefix('patients')
 
 

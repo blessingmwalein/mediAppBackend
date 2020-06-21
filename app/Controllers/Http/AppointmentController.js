@@ -5,7 +5,8 @@
 class AppointmentController {
 
     async index({response}){
-        const appointments = await Appointment.all()
+        const dbappointments= await Appointment.find("5eef750d5b8a35cb829417b8")
+        return response.json(dbappointments.Appointments)
 
         return response.json(appointments)
     }
@@ -19,7 +20,7 @@ class AppointmentController {
         return response.json({message:'apppointed deleted'})
     }
   async store({request, response}){
-     const dbappointments= await Appointment.find("5ee992a77c515db4a1cceabc")
+     const dbappointments= await Appointment.find("5eef750d5b8a35cb829417b8")
      const appointmentInfo = request.all()
 
      const m= new Moment()
@@ -32,8 +33,8 @@ class AppointmentController {
         hospital_id:appointmentInfo.hospital_id,
         priority:appointmentInfo.priority,
         doctor_id:appointmentInfo.doctor_id,
-        start_time:m.toString(),
-        end_time:m.add(1, 'h').toString(),
+        start_time:appointmentInfo.start_time,
+        end_time:appointmentInfo.end_time,
         duration:1,
         status:'pending'
     }

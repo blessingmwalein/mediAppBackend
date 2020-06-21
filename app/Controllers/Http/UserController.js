@@ -37,7 +37,7 @@ class UserController {
             first_name:user.first_name,
             last_name:user.last_name,
             email:user.email,
-           
+            hospital_id:user.hospital_id
         }
         return response.json(data)
     }
