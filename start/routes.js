@@ -21,6 +21,7 @@ Route.group(()=>{
    Route.post('register', 'UserController.register')
    Route.get('show/:id', 'UserController.show')
    Route.get('/', 'UserController.index')
+   Route.get('/doctor/:id', 'UserController.getByUser')
 }).prefix('medico')
 
 Route.group(()=>{
@@ -40,8 +41,9 @@ Route.group(() => {
     Route.get('show/:id', 'DoctorController.show')
     Route.put('edit/:id', 'DoctorController.update')
     Route.post('delete/:id', 'DoctorController.delete')
+    Route.post('login', 'DoctorController.login')
+    Route.get('/user/:id', 'DoctorController.getByUser')
  }).prefix('doctors')
-
  Route.group(()=>{
    Route.post('save', 'PatientController.store')
    Route.get('/:id', 'PatientController.index')
@@ -50,7 +52,6 @@ Route.group(() => {
    Route.post('delete/:id', 'PatientController.delete')
 }).prefix('patients')
 
-
 Route.group(() => { 
    Route.post('save', 'BotchatmessageController.store') 
    Route.get('show/:id','BotchatmessageController.show' )
@@ -58,7 +59,17 @@ Route.group(() => {
 }).prefix('bot')
 
 Route.group(()=>{
-   Route.post('save', 'AppointmentController.store')
-   Route.get('/', 'AppointmentController.index')
+   Route.post('save/:id', 'AppointmentController.store')
+   Route.get('/:id', 'AppointmentController.index')
    Route.delete('delete/:id', 'AppointmentController.delete')
+   Route.post('/switch', 'AppointmentController.switchApp')
+
 }).prefix('appointment')
+
+Route.group(() => { 
+   Route.get('/', 'RoleController.index') 
+   Route.post('/save','RoleController.store' )
+}).prefix('roles')
+Route.get('moment', 'AppointmentController.moment')
+
+Route.get('app', 'AppointmentController.show')

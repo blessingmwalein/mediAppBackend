@@ -17,9 +17,8 @@ class HospitalController {
         const district =await District.find(hospital.district_id)
         const doctors=await Doctor.where('hospital_id').eq(params.id).fetch()
 
-        const patients=await Patient.where('hospital_id').eq(params.id).fetch()
-        const appointments =await Appointment.where('hospital_id').eq(hospital.id).first()
-
+        const patients=await Patient.where({hospital_id:params.id}).fetch()
+        const appointments =await Appointment.where({hospital_id: params.id}).fetch()
         return response.json({
             _id:hospital._id,
             name:hospital.name, 
@@ -27,10 +26,8 @@ class HospitalController {
             district:district,
             doctors:doctors,
             patients:patients,
-            appointments:appointments.Appointments
+            appointments:appointments
         })
-
-        
     }
     async store({request, response}){
         const hospitalInfo =request.only(

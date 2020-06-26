@@ -55,7 +55,6 @@ module.exports = {
       secret: Env.get('APP_KEY')
     }
   },
-
   api: {
     serializer: 'LucidMongo',
     scheme: 'api',

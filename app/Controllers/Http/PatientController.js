@@ -3,6 +3,8 @@ const Patient = use('App/Models/Patient')
 const Doctor = use('App/Models/Doctor')
 const Appointment = use('App/Models/Appointment')
 const Hospital = use('App/Models/Hospital')
+const User = use('App/Models/User')
+
 
 const Hash = use('Hash')
 
@@ -24,8 +26,20 @@ class PatientController {
             'hospital_id',
             'address',
             'gender',
-            'password'
+            'password',
+            'role_id'
         ])
+
+        const user = new User()
+
+        user.first_name = patientInfo.first_name
+        user.last_name = patientInfo.last_name
+        user.email = patientInfo.email
+        user.password = patientInfo.password
+        user.hospital_id = patientInfo.hospital_id
+        user.role_id = patientInfo.role_id
+        await user.save()
+
         const patient = await Patient.create({
             first_name: patientInfo.first_name,
             last_name: patientInfo.last_name,
@@ -35,19 +49,20 @@ class PatientController {
             hospital_id: patientInfo.hospital_id,
             address: patientInfo.address,
             gender: patientInfo.gender,
-            password: await Hash.make(patientInfo.password)
+            user_id: user._id
         })
-        return response.json(patient)
-    }
 
+        return response.json({ message: "Patient Saved" })
+    }
     async show({ params, response }) {
 
         const patient = await Patient.find(params.id)
         const doctor = await Doctor.find(patient.doctor_id)
-        const appointments = await Appointment.where('user_id').eq(patient.id).fetch()
+        const appointments = await Appointment.where('user_id').eq(patient._id).fetch()
         const hospital = await Hospital.find(patient.hospital_id)
-
+        const user = await User.find(patient.user_id)
         const data = {
+            id: patient._id,
             fname: patient.first_name,
             lname: patient.last_name,
             email: patient.email,
@@ -56,8 +71,10 @@ class PatientController {
             gender: patient.gender,
             password: patient.password,
             appointments: appointments,
+            doctor_id: patient.doctor_id,
             doctor: doctor,
-            hospital: hospital
+            hospital: hospital,
+            user:user
         }
         return response.json(data)
     }
@@ -70,10 +87,9 @@ class PatientController {
             'phone',
             'address',
             'doctor_id',
-            'password',
+            'user_id',
             'gender',
         ])
-
         const patient = await Patient.find(params.id)
         if (!patient) {
             return response.status(404).json({ data: "Data not found" })
@@ -86,10 +102,9 @@ class PatientController {
             phone: patientInfo.phone,
             address: patientInfo.address,
             doctor_id: patientInfo.doctor_id,
-            password: patientInfo.password
+            user_id: patientInfo.user_id
         })
         await patient.save()
-
         return response.status(200).json({ message: "Patient Saved" })
     }
     async delete({ params, response }) {
