@@ -28,7 +28,6 @@ class UserController {
             user.password = userInfo.password
             user.hospital_id = userInfo.hospital_id
             user.role_id=userInfo.role_id
-
             await user.save()
             return response.status(201).json(user);
     }
