@@ -36,9 +36,9 @@ class HospitalController {
         const hospital =await Hospital.create({
             name:hospitalInfo.name,
             district_id:hospitalInfo.district_id,
-            address:hospitalInfo.address
+            address:hospitalInfo.address,
+            location:hospitalInfo.location
         })
-
         return response.status(201).json(hospital)
     }    
 }

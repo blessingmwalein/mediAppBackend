@@ -21,7 +21,6 @@ class UserController {
     async register({request, response}){
             const userInfo = request.all()
             const user = new User()
-
             user.first_name = userInfo.first_name
             user.last_name =userInfo.last_name
             user.email =userInfo.email
@@ -80,7 +79,39 @@ class UserController {
             user:user
         }
         return response.json(data)
-       
+    }
+
+    async getByUserPatient({params, response}){
+        const user = await User.find(params.id)
+
+        const patient = await Patient.where({user_id:user._id}).first()
+
+        // if(!patient){
+        //     return response.json({message:"Patient not found"})
+        // }
+
+        // // const patients = await Patient.where({doctor_id:patient._id.toString()}).fetch()
+
+        // // const appointments =await Appointment.where({doctor_id:patient._id.toString()}).fetch()
+
+
+        // // const hospital =await Hospital.find(patient.hospital_id)
+
+        // const data={
+        //     id:patient._id,
+        //     fname : patient.first_name,
+        //     lname:patient.last_name,
+        //     email:patient.email,
+        //     address:patient.address,
+        //     phone:patient.phone,
+        //     gender:patient.gender,
+        //     // password:patient.password,
+        //     // appointments:appointments,
+        //     // patients:patients,
+        //     // hospital:hospital,
+        //     // user:user
+        // }
+        return response.json(patient)
     }
 }
 module.exports = UserController

@@ -19,7 +19,8 @@ const providers = [
   '@adonisjs/shield/providers/ShieldProvider',
   '@adonisjs/session/providers/SessionProvider',
   '@adonisjs/auth/providers/AuthProvider',
-  'lucid-mongo/providers/LucidMongoProvider'
+  'lucid-mongo/providers/LucidMongoProvider',
+  '@adonisjs/cors/providers/CorsProvider'
 ]
 
 /*
@@ -28,7 +29,7 @@ const providers = [
 |--------------------------------------------------------------------------
 |
 | Ace providers are required only when running ace commands. For example
-| Providers for migrations, tests etc.
+| Providers for migratioluns, tests etc.
 |
 */
 const aceProviders = [

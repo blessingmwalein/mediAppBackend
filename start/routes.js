@@ -22,6 +22,7 @@ Route.group(()=>{
    Route.get('show/:id', 'UserController.show')
    Route.get('/', 'UserController.index')
    Route.get('/doctor/:id', 'UserController.getByUser')
+   Route.get('/patient/:id', 'UserController.getByUserPatient')
 }).prefix('medico')
 
 Route.group(()=>{
