@@ -51,6 +51,7 @@ Route.group(() => {
    Route.get('show/:id', 'PatientController.show')
    Route.put('edit/:id', 'PatientController.update')
    Route.post('delete/:id', 'PatientController.delete')
+   Route.get('/appointments/:id', 'PatientController.appointments');
 }).prefix('patients')
 
 Route.group(() => { 

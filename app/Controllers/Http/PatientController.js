@@ -57,26 +57,26 @@ class PatientController {
     async show({ params, response }) {
 
         const patient = await Patient.find(params.id)
-        const doctor = await Doctor.find(patient.doctor_id)
-        const appointments = await Appointment.where('user_id').eq(patient._id).fetch()
-        const hospital = await Hospital.find(patient.hospital_id)
-        const user = await User.find(patient.user_id)
-        const data = {
-            id: patient._id,
-            fname: patient.first_name,
-            lname: patient.last_name,
-            email: patient.email,
-            address: patient.address,
-            phone: patient.phone,
-            gender: patient.gender,
-            password: patient.password,
-            appointments: appointments,
-            doctor_id: patient.doctor_id,
-            doctor: doctor,
-            hospital: hospital,
-            user:user
-        }
-        return response.json(data)
+        // const doctor = await Doctor.find(patient.doctor_id)
+        // const appointments = await Appointment.where('user_id').eq(patient._id).fetch()
+        // const hospital = await Hospital.find(patient.hospital_id)
+        // const user = await User.find(patient.user_id)
+        // const data = {
+        //     id: patient._id,
+        //     fname: patient.first_name,
+        //     lname: patient.last_name,
+        //     email: patient.email,
+        //     address: patient.address,
+        //     phone: patient.phone,
+        //     gender: patient.gender,
+        //     password: patient.password,
+        //     appointments: appointments,
+        //     doctor_id: patient.doctor_id,
+        //     doctor: doctor,
+        //     hospital: hospital,
+        //     user:user
+        // }
+        return response.json(patient)
     }
 
     async update({ params, request, response }) {
@@ -115,6 +115,15 @@ class PatientController {
         }
         await patient.delete()
         return response.json({ message: "Patient deleted" })
+    }
+    async appointments({ params, response}){
+        const appointments = await Appointment.where('patient_id').eq(params.id).fetch()
+
+        if(!appointments){
+            return response.json({message:"Patient does not have any appointments"})
+        }
+        
+        return response.json(appointments)
     }
 }
 module.exports = PatientController
